@@ -1,0 +1,85 @@
+.table-users-container
+{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.table-users-content
+{
+    height: 100%;
+    width: 82%;
+    min-width: 900px;
+    border: 1px solid blue;
+}
+.top-bar-table
+{
+    min-height: 50px;
+    height: 6%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid gray;
+}
+.top-bar-current-table
+{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+    font-size: 1.4rem;
+}
+.top-bar-log-out
+{
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.top-bar-log-out button
+{
+    padding: 3px 8px;
+    font-family: 'Poppins';
+}
+.table-add-item
+{
+    width: 100%;
+    border: 1px solid red;
+    height: 12%;
+    display: flex;
+    flex-direction: row;
+}
+.table-add-item-field
+{
+    height: 100%;
+    width: 30%;
+    border: 1px solid magenta;
+}
+.table-view-data
+{
+    min-height: 20px;
+    width: 100%;
+    border: 1px solid blue;
+    padding: 15px;
+}
+.table-view-data table 
+{
+    width: 100%;
+    font-family: 'Poppins';
+}
+table td
+{
+    height: 30px;
+}
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-align: center;
+
+  }
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

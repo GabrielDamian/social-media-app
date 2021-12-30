@@ -50,30 +50,33 @@ const Signup = (props)=>{
     const handleSubmit = ()=>{
         if (data.username == '')
         {
-            prompt('Please complemet username first!')
+            alert('Please complemet username first!')
         }
         else if (data.password == '' || data.repeatpassword == '')
         {
-            prompt('Please complete both password!')
+            alert('Please complete both password!')
         }
         else if (data.password != data.repeatpassword)
         {
-            prompt("Passwords don't match!")
+            alert("Passwords don't match!")
         }
         else if (data.password.length <5)
         {
-            prompt("Password to short! (min 5 length)")
+            alert("Password to short! (min 5 length)")
         }
         else 
         {
             console.log("Sign up la api!")
             axios.post('http://localhost:5000/api/signup',data)
             .then((resp)=>{
-                prompt('Welcome!')
+                alert('Welcome!')
+                console.log('resp:',resp.data)
+                localStorage.setItem('token',resp.data)
+                history('/table-users')
                 
             })
             .catch((err)=>{
-                prompt('Unable to signup!')
+                alert('Unable to signup!')
             })
         }
     }

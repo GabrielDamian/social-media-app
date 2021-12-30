@@ -10,9 +10,8 @@ import {
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import Denied from './components/Denied/Denied';
-import Dashboard from './components/Dashboard/Dashboard';
 import Feed from './components/Feed/Feed';
-
+import TableUsers from './components/Dashboard/Table_Users/TableUsers';
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/feed" element={<Feed />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/table-users" element={<TableUsers />} />
         <Route path="*" element={<Denied />} />
       </Routes>
     </BrowserRouter>
