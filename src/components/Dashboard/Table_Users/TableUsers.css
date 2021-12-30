@@ -10,7 +10,6 @@
     height: 100%;
     width: 82%;
     min-width: 900px;
-    border: 1px solid blue;
 }
 .top-bar-table
 {
@@ -20,11 +19,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid gray;
 }
 .top-bar-current-table
 {
-    width: 90%;
+    width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,10 +31,14 @@
 }
 .top-bar-log-out
 {
-    width: 10%;
+    width: 20%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+.top-bar-log-out span
+{
+    font-family: 'Poppins', sans-serif;
 }
 .top-bar-log-out button
 {
@@ -46,28 +48,72 @@
 .table-add-item
 {
     width: 100%;
-    border: 1px solid red;
     height: 12%;
     display: flex;
     flex-direction: row;
 }
+.table-title-meaning
+{
+    height: 100%;
+    width: 10%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+
 .table-add-item-field
 {
     height: 100%;
-    width: 30%;
-    border: 1px solid magenta;
+    width: 25%;
+    border-right: 2px solid gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+.table-add-item-field span 
+{
+    margin-bottom: 10px;
+}
+.table-add-item-field input 
+{
+    padding: 3px;
+    font-family: 'Poppins', sans-serif;
+}
+.input-content input 
+{
+    padding: 2px 3px;
+    font-family: 'Poppins';
+}
+.table-add-item-submit
+{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+.table-add-item-submit button 
+{
+    font-size: 0.8em;
+    font-family: 'Poppins', sans-serif;
+    padding: 4px 7px;
 }
 .table-view-data
 {
     min-height: 20px;
     width: 100%;
-    border: 1px solid blue;
     padding: 15px;
+    max-height: 60vh;
+    overflow-y: scroll ;
 }
 .table-view-data table 
 {
     width: 100%;
     font-family: 'Poppins';
+    
 }
 table td
 {
@@ -82,4 +128,16 @@ td, th {
   }
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+.delete-icon
+{
+    height:30px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+}
+.delete-icon:active
+{
+    border: 1px solid black;
+    transition: border-color 0.2s ease;
 }

@@ -28,7 +28,7 @@ const LeftBar = ()=>{
             
             <div 
                 className="field-container"
-                onClick={()=>redirect('table-description')}
+                onClick={()=>redirect('table-desc')}
                 >
                 <span>Table Description</span>
             </div>   

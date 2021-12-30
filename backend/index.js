@@ -13,7 +13,6 @@ app.use(express.json())
 
 let TOKEN_SECRET = 'wkfkfsbcnajbskascbasjknakcbjhsvclskbc'
 
-let incrementer_user_id = 102;
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -50,7 +49,6 @@ app.post('/api/signup',async (req,res)=>{
 
     //in acest punct, usernameul este unic si il putem inregistra in db
 
-    console.log('s-a ajuns aici')
 
     //daca username-ul nu exista
     //hash the password
@@ -59,14 +57,25 @@ app.post('/api/signup',async (req,res)=>{
 
   
     //making a new user
-    console.log('aici 2')
-  
-    incrementer_user_id++;
 
-    //determina cati users sunt in db a.i
+    //determina cati users sunt in db a.i sa poate face incrementare dinamic, chiar si cand backend intra in throw error si vr restart
 
-    console.log('incrmetn id:', incrementer_user_id)
-    con.query(`insert into users values (${incrementer_user_id}, '${username}', '${hashPassword}');`, function  (err, data) {
+    current_users_in_db = 0
+    con.query(`select * from users;`, function  (err, data) {
+      if (err) {
+        console.log('eroare la numarare users in db')
+        return res.status(400).send(err);
+      }
+      
+      console.log("Data counter MAAAAAAN:")
+      console.log(data.length)
+      current_users_in_db = data.length
+
+    
+    current_users_in_db++;
+    console.log('adaug user nou cu id counter:', current_users_in_db);
+
+    con.query(`insert into users values (${current_users_in_db}, '${username}', '${hashPassword}');`, function  (err, data) {
       if (err) {
         console.log('eroare la adaugare user nou in db')
         return res.status(400).send(err);
@@ -97,7 +106,7 @@ app.post('/api/signup',async (req,res)=>{
       })
   
     })
-  
+  });
 
   })
  
@@ -181,6 +190,141 @@ app.post('/api/fetch-table-users',async (req,res)=>{
 
   });
 });
+
+
+
+app.post('/api/delete-item',async (req,res)=>{
+
+  let id = req.body.id;
+  let table = req.body.table;
+
+  console.log('date delete:', id,table);
+  //delete from users where ID = '7';
+  con.query(`delete from ${table} where ID = '${id}';`, async  (err, data)=> {
+    if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+
+  });
+
+});
+
+
+app.post('/api/update-item-users',async (req,res)=>{
+  let id = req.body.id;
+  let username = req.body.username;
+  let password = req.body.password;
+
+  con.query(`update users
+    set username = '${username}', password_token='${password}'
+    where ID =${id};`, async  (err, data)=> {
+    
+      if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+  });
+});
+
+
+
+
+app.post('/api/fetch-table-desc',async (req,res)=>{
+
+
+  con.query(`select * from description;`, async  (err, data)=> {
+    if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+
+  });
+
+});
+
+
+
+app.post('/api/delete-item-desc',async (req,res)=>{
+
+  let id = req.body.id;
+
+  //delete from users where ID = '7';
+  con.query(`delete from description where user_id ='${id}';`, async  (err, data)=> {
+    if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+
+  });
+
+});
+
+
+
+app.post('/api/update-item-desc',async (req,res)=>{
+
+  let id = req.body.user_id;
+  let desc_val = req.body.desc_val;
+
+
+  console.log('update in desc val', id, desc_val);
+  
+  con.query(`update description
+    set description_val = '${desc_val}'
+    where user_id =${id};`, async  (err, data)=> {
+    
+      if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+  });
+});
+
+
+app.post('/api/insert-item-desc',async (req,res)=>{
+
+  let user_id = req.body.user_id;
+  let desc_val = req.body.desc_val;
+
+  console.log('insert item desc:', user_id, desc_val);
+//   insert into description
+// values(3,'desc for user 3');
+    con.query(` insert into description values(${user_id},'${desc_val}');`, async  (err, data)=> {
+
+      if (err || data.length == 0) {
+      return res.status(400).send(err);
+    }
+
+    console.log('aici:',data)
+    res.json({
+      'lines': data
+    })
+    });
+
+});
+
+
 
 
 app.listen(PORT,()=>{

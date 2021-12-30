@@ -12,6 +12,8 @@ import Signup from './components/Signup/Signup';
 import Denied from './components/Denied/Denied';
 import Feed from './components/Feed/Feed';
 import TableUsers from './components/Dashboard/Table_Users/TableUsers';
+import TableDescription from './components/Dashboard/TableDescription/TableDescription';
+import TableStatus from './components/Dashboard/TableStatus/TableStatus';
 
 function App() {
   return (
@@ -21,6 +23,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/table-users" element={<TableUsers />} />
+        <Route path="/table-desc" element={<TableDescription />} />
+        <Route path="/table-status" element={<TableStatus />} />
+
         <Route path="*" element={<Denied />} />
       </Routes>
     </BrowserRouter>
