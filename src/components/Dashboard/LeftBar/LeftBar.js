@@ -19,6 +19,35 @@ const LeftBar = ()=>{
             </div>
 
             <div 
+                className="field-container" style={{minHeight: '15px', color: '#B60000'}}
+                >
+                <span>User section</span>
+            </div> 
+
+
+            <div 
+                className="field-container"
+                onClick={()=>redirect('myprofile')}
+            >
+                <span>My Profile</span>
+            </div>
+
+            <div 
+                className="field-container"
+                onClick={()=>redirect('news-feed')}
+            >
+                <span>News Feed</span>
+            </div>
+
+
+
+
+            <div 
+                className="field-container" style={{minHeight: '15px', color: '#B60000'}}
+                >
+                <span>Admin section</span>
+            </div>
+            <div 
                 className="field-container"
                 onClick={()=>redirect('table-users')}
             >
@@ -44,7 +73,8 @@ const LeftBar = ()=>{
                 onClick={()=>redirect('table-posts')}
                 >
                 <span>Table Posts</span>
-            </div>           
+            </div>    
+                  
         </div>
     )
 }

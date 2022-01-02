@@ -1,0 +1,136 @@
+.newsfeed-container{
+    height: 100vh;
+    width: 100%;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+}
+.newsfeed-content
+{
+    width: 82%;
+    height: 100vh;
+    overflow-y: scroll;
+}
+.newsfeed-content-header
+{
+    height: 6%;
+    min-height: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins';
+    font-size: 1.3em;
+}
+textarea {
+    resize: none;
+  }
+.newsfeed-content-add-new
+{
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.newsfeed-content-add-padding
+{
+    width: 50%;
+    height: 100%;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+.newsfeed-content-add-title
+{
+    height: 20%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 5px;
+    font-family: 'Poppins', sans-serif;
+}
+.newsfeed-content-add-total
+{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.newsfeed-content-add-total textarea
+{
+    font-family: 'Poppins', sans-serif;
+    height: 50%;
+    width: 50%;
+    padding: 10px;
+}
+.newsfeed-content-add-total button 
+{
+    padding: 5px 8px;
+    font-family: 'Poppins', sans-serif;
+}
+.tag-other-user
+{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+.tag-other-user select 
+{
+    margin-top: 5px;
+    
+}
+.newsfeed-content-scroll
+{
+    min-height: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+/*Post item */
+.post-container
+{
+    height: 300px;
+    margin-bottom: 20px;
+    width: 50%;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+.post-header
+{
+    height: 20%;
+}
+
+.post-header-top
+{
+    height: 60%;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+.post-header-bottom
+{
+    height: 40%;
+    display: flex;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 0px 15px;
+    font-size: 0.8em;
+}
+.post-content
+{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+}
+.post-content img 
+{
+    height: 100%;
+
+}
