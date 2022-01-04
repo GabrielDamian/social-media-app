@@ -4,6 +4,7 @@ import { useNavigate  } from "react-router-dom";
 import store from '../../../redux/store';
 import LeftBar from '../LeftBar/LeftBar';
 import TrashIcon from '../../../media/trash-bin.png';
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 const TableStatus = () => {
 
@@ -32,7 +33,10 @@ const TableStatus = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
     })
 
     
@@ -42,22 +46,8 @@ const TableStatus = () => {
     return (
         <>
         {
-            haveAcces == true ? <TableStatusContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <TableStatusContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
-        </>
-    )
-}
-
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
         </>
     )
 }
@@ -116,10 +106,14 @@ const TableStatusContent = (props)=>{
             status_val: status_value
         })
         .then(res=>{
-            alert('delete with succes!')
+            alert('Status deleted!')
             fetchStatusData()
         })
-        .catch((err)=>{console.log(err)})
+        .catch((err)=>{
+            console.log(err)
+            alert("Can't delete status!")
+        })
+
     }
     const listaOptiuniCheck =['BadKarma','DogeCoin','Buttercup','PickleRick']
 
@@ -179,10 +173,13 @@ const TableStatusContent = (props)=>{
                     status_val: addUserData.status_value
                 })
                 .then(res=>{
-                    alert('added  with succes!')
+                    alert('Status added successfully!')
                     fetchStatusData()
                 })
-                .catch((err)=>{console.log(err)})
+                .catch((err)=>{
+                    console.log(err)
+                    alert("Can't add status!")
+                })
                 
             }
         }
@@ -238,12 +235,12 @@ const TableStatusContent = (props)=>{
                 old_status_val: modifyValue.old_val
             })
             .then(res=>{
-                alert('updated with succes!')
+                alert('Status updated!')
                 fetchStatusData()
             })
             .catch((err)=>{
                 console.log(err)
-                alert("eroare la update")
+                alert("Can't update status!")
             })
         }
     }

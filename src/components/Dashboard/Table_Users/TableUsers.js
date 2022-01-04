@@ -5,6 +5,7 @@ import store from '../../../redux/store';
 import LeftBar from '../LeftBar/LeftBar';
 import './TableUsers.css';
 import TrashIcon from '../../../media/trash-bin.png';
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 const TableUsers = () => {
 
@@ -33,7 +34,10 @@ const TableUsers = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
     })
 
     
@@ -43,22 +47,8 @@ const TableUsers = () => {
     return (
         <>
         {
-            haveAcces == true ? <TableUsersContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <TableUsersContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
-        </>
-    )
-}
-
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
         </>
     )
 }
@@ -80,7 +70,9 @@ const TableUsersContent = (props)=>{
                 setTableData(res.data.lines)
                
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+            })
     }
 
     useEffect(()=>{
@@ -136,7 +128,7 @@ const TableUsersContent = (props)=>{
         }
         else if (inputData.password_token == '' )
         {
-            alert('Please complete  password!')
+            alert('Please complete password!')
         }
         else if (inputData.password_token.length <5)
         {
@@ -157,7 +149,7 @@ const TableUsersContent = (props)=>{
                 
             })
             .catch((err)=>{
-                alert('Unable to signup!')
+                alert('Unable to signup new user!')
             })
         }
     }
@@ -187,7 +179,7 @@ const TableUsersContent = (props)=>{
                     
                 })
                 .catch((err)=>{
-                    alert('Unable to signup!')
+                    alert('Unable to delete item!')
                 })
         }
       

@@ -4,6 +4,7 @@ import { useNavigate  } from "react-router-dom";
 import store from '../../../redux/store';
 import LeftBar from '../LeftBar/LeftBar';
 import './NewsFeed.css';
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 const NewsFeed = () => {
 
@@ -31,7 +32,10 @@ const NewsFeed = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
     })
 
     
@@ -41,22 +45,8 @@ const NewsFeed = () => {
     return (
         <>
         {
-            haveAcces == true ? <NewsFeedContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <NewsFeedContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
-        </>
-    )
-}
-
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
         </>
     )
 }
@@ -93,7 +83,11 @@ const NewsFeedContent = (props)=>{
             console.log("fetch table-posts:",res.data.lines);
             setPosts(res.data.lines)
         })
-        .catch((err)=>{console.log(err)})
+        .catch((err)=>{
+            console.log(err)
+            alert("Can't fetch table_posts.")
+        
+        })
     }
 
     useEffect(()=>{
@@ -167,7 +161,11 @@ const NewsFeedContent = (props)=>{
                 setUSers(res.data.lines)
                
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                
+                console.log(err)
+                alert("Can't fetch table_users.")
+            })
     }
     useEffect(()=>{
         fetchData()
@@ -212,7 +210,7 @@ const NewsFeedContent = (props)=>{
         }
         else if(newPostVal.otherUser == '')
         {
-            alert('Please tag a user')
+            alert('Please tag a user.')
         }
         else 
         {
@@ -224,7 +222,7 @@ const NewsFeedContent = (props)=>{
             })
             .then(res=>{
                 console.log("fetch table-posts:",res.data.lines);
-                alert('Posted')
+                alert('Posted!')
                 fetchPosts()
                
             })

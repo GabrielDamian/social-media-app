@@ -5,6 +5,7 @@ import store from '../../../redux/store';
 import './TablePosts.css';
 import LeftBar from '../LeftBar/LeftBar';
 import TrashIcon from '../../../media/trash-bin.png';
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 
 const TablePosts = () => {
@@ -34,7 +35,10 @@ const TablePosts = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
     })
 
     
@@ -44,25 +48,12 @@ const TablePosts = () => {
     return (
         <>
         {
-            haveAcces == true ? <TablePostsContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <TablePostsContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
         </>
     )
 }
 
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
-        </>
-    )
-}
 
 const TablePostsContent = (props)=>{
 
@@ -145,20 +136,20 @@ const TablePostsContent = (props)=>{
     const submitAddNewPost = ()=>{
         if(newAddItem.user_1 == '')
         {
-            alert('please complete user 1 field')
+            alert('Please complete user_1 field')
         }
         else if(newAddItem.user_2 == '')
         {
-            alert('please complete user 2 field')
+            alert('Please complete user_2 field')
             
         }
         else if(newAddItem.post_value == '')
         {
-            alert('please complete post value field')
+            alert("Please complete post's value field")
         }
         else if(newAddItem.user_1 == newAddItem.user_2) 
         {
-            alert(`user ${newAddItem.user_1} can't tag himself!`)
+            alert(`User ${newAddItem.user_1} can't tag himself!`)
         }
         else 
         {
@@ -172,10 +163,12 @@ const TablePostsContent = (props)=>{
             })
             .then(res=>{
                 console.log("add table-posts:",res.data.lines);
-                alert('added succesfully!')
+                alert('Post added!')
                 fetchPostsData()
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                alert("Can't add new post!")
+                console.log(err)})
         }
     }
 
@@ -189,10 +182,13 @@ const TablePostsContent = (props)=>{
         })
         .then(res=>{
             console.log("delete table-posts:",res.data.lines);
-            alert('delete succesfully!')
+            alert('Delete succesfully!')
             fetchPostsData()
         })
-        .catch((err)=>{console.log(err)})
+        .catch((err)=>{
+            alert("Can't delete post!")
+            console.log(err)})
+
 
     }
     
@@ -227,11 +223,11 @@ const TablePostsContent = (props)=>{
     const submitUpdateItem = ()=>{
         if(newPostVal.post_id == '')
         {
-            alert('please select post id')
+            alert('Please select post id')
         }
         else if(newPostVal.new_post_val== '')
         {
-            alert('please complete field post val')
+            alert("Please complete field post's val")
         }
         else 
         {
@@ -241,10 +237,12 @@ const TablePostsContent = (props)=>{
             })
             .then(res=>{
                 console.log("update table-posts:",res.data.lines);
-                alert('updated succesfully!')
+                alert('Updated succesfully!')
                 fetchPostsData()
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                alert("Can't update post!")
+                console.log(err)})
         }
     }
     return (

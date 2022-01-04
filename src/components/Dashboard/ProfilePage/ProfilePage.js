@@ -5,7 +5,7 @@ import store from '../../../redux/store';
 import LeftBar from '../LeftBar/LeftBar';
 import './ProfilePage.css';
 import AvatarImg from '../../../media/avatar.png';
-
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 const ProfilePage = () => {
 
@@ -34,7 +34,11 @@ const ProfilePage = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
+
     })
 
     
@@ -44,25 +48,12 @@ const ProfilePage = () => {
     return (
         <>
         {
-            haveAcces == true ? <ProfilePageContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <ProfilePageContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
         </>
     )
 }
 
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
-        </>
-    )
-}
 
 const ProfilePageContent = (props)=>{
 
@@ -86,7 +77,9 @@ const ProfilePageContent = (props)=>{
                     }
                 })
             })
-        .catch((err)=>{console.log(err)
+        .catch((err)=>{
+            console.log(err)
+            alert("Can't fetch user's profile page data!")
         })
     }
 
@@ -109,7 +102,8 @@ const ProfilePageContent = (props)=>{
                     }
                 })
             })
-        .catch((err)=>{console.log(err)
+        .catch((err)=>{
+            console.log(err)
         })
     }
 
@@ -131,7 +125,8 @@ const ProfilePageContent = (props)=>{
                     }
                 })
             })
-        .catch((err)=>{console.log(err)
+        .catch((err)=>{
+            console.log(err)
         })
     }
 
@@ -203,7 +198,9 @@ const ProfilePageContent = (props)=>{
                         console.log("fetch descccc:", res.data)
                         fetchDescription()
                     })
-                .catch((err)=>{console.log(err)
+                .catch((err)=>{
+                    console.log(err)
+                    alert("Can't insert user's desctiption!")
                 })
 
 
@@ -220,7 +217,9 @@ const ProfilePageContent = (props)=>{
                         console.log("fetch descccc:", res.data)
                         fetchDescription()
                     })
-                .catch((err)=>{console.log(err)
+                .catch((err)=>{
+                    console.log(err)
+                    alert("Can't update user's desctiption!")
                 })
             }
         }
@@ -246,7 +245,9 @@ const ProfilePageContent = (props)=>{
                         console.log("fetch descccc:", res.data)
                         fetchStatus()
                     })
-                .catch((err)=>{console.log(err)
+                .catch((err)=>{
+                    console.log(err)
+                    alert("Can't insert user's status!")
                 })
             }
             else 
@@ -263,7 +264,9 @@ const ProfilePageContent = (props)=>{
                         console.log("fetch descccc:", res.data)
                         fetchStatus()
                     })
-                .catch((err)=>{console.log(err)
+                .catch((err)=>{
+                    console.log(err)
+                    alert("Can't update user's status!")
                 })
             }
         }

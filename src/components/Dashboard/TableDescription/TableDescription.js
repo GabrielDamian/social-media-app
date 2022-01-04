@@ -5,6 +5,7 @@ import store from '../../../redux/store';
 import LeftBar from '../LeftBar/LeftBar';
 import './TableDescription.css';
 import TrashIcon from '../../../media/trash-bin.png';
+import PageBlocked from '../PageBlocked/PageBlocked';
 
 const TableDescription = () => {
 
@@ -33,7 +34,10 @@ const TableDescription = () => {
                 })
                 setHaveAcces(true);
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+                alert("Can't verify token!")
+            })
     })
 
     
@@ -43,22 +47,8 @@ const TableDescription = () => {
     return (
         <>
         {
-            haveAcces == true ? <TableDescriptionContent logOut={logOut} currentUser={currentUser}/> : <DashboardBlocked/>
+            haveAcces == true ? <TableDescriptionContent logOut={logOut} currentUser={currentUser}/> : <PageBlocked/>
         }
-        </>
-    )
-}
-
-const DashboardBlocked = ()=>{
-    const history = useNavigate ()
-
-    const redirect = ()=>{
-        history('/login')
-    }
-    return(
-        <>
-            <p>Do you know the way ?</p>
-            <button onClick={redirect}>Log in</button>
         </>
     )
 }
@@ -81,11 +71,12 @@ const TableDescriptionContent = (props)=>{
                 setTableData(res.data.lines)
                
             })
-            .catch((err)=>{console.log(err)})
+            .catch((err)=>{
+                console.log(err)
+            })
     }
 
     useEffect(()=>{
-        console.log('use effect first !!!!')
         fetchData();
 
     },[])
@@ -96,11 +87,10 @@ const TableDescriptionContent = (props)=>{
             const config ={
                 id: id,
             }
-            console.log('cofig:', config);
     
             axios.post('http://localhost:5000/api/delete-item-desc',config)
                 .then((resp)=>{
-                    alert('Delete desc succesefully!!')
+                    alert('Description deleted succesefully!!')
                     console.log('resp:',resp.data)
                     fetchData();
                     
@@ -159,17 +149,15 @@ const TableDescriptionContent = (props)=>{
     const modifyItem = () =>
     {
 
-        console.log('modofy item trigger final')
         const config = {
            user_id: selectedModifyUser.user_id,
            desc_val: selectedModifyUser.description_val
         }
 
-        console.log('check config', config);
 
         axios.post('http://localhost:5000/api/update-item-desc',config)
         .then((resp)=>{
-            alert('User updated succesfully!')
+            alert('Description updated succesfully!')
             console.log('resp:',resp.data)
             fetchData();
             
@@ -197,9 +185,6 @@ const TableDescriptionContent = (props)=>{
         fetchUserData();
 
     },[])
-    useEffect(()=>{
-        console.log("USERS NOW:", users);
-    },[users])
 
     const [insertNew, setInsertNew] = useState({
         user_id: '',
@@ -238,7 +223,7 @@ const TableDescriptionContent = (props)=>{
         }
         else if (insertNew.desc_val == '')
         {
-            alert('Please select a desc val')
+            alert('Please select a description value')
         }
         else
         {
@@ -248,7 +233,7 @@ const TableDescriptionContent = (props)=>{
                 if(el.user_id == insertNew.user_id)
                 {
                     alreadyExits = true
-                    alert('this user have already a desc, please delete it before or select another user')
+                    alert('This user have already a desc, please delete it or select another user')
                 }
             })
             if(alreadyExits == false)
@@ -261,7 +246,7 @@ const TableDescriptionContent = (props)=>{
                 })
                 .then(res=>{
                     console.log("fetch table-users:",res.data.lines);
-                    alert('succes adding item desc')
+                    alert('Succes adding description')
                     fetchData()
                 })
                 .catch((err)=>{console.log(err)})
