@@ -61,7 +61,7 @@ const ProfilePageContent = (props)=>{
     const [userData, setUserData] = useState({
         username:'',
         desc:'',
-        status:''
+        status:[]
     });
     const fetchUsername = ()=>{
         axios.post('http://localhost:5000/api/fetch-specific-userame',{
@@ -112,16 +112,21 @@ const ProfilePageContent = (props)=>{
     },[])
 
     const fetchStatus = ()=>{
-        axios.post('http://localhost:5000/api/fetch-specific-status',{
+        axios.post('http://localhost:5000/api/fetch-multiple-status',{
             id: props.currentUser
         })
         .then(res=>{
             
-                console.log("fetch descccc:", res.data)
+                console.log("fetch STATUS:", res.data.status)
+                let multiple_statuses = []
+                res.data.status.forEach((el)=>{
+                    multiple_statuses.push(el.status_value)
+                })
+
                 setUserData((prev)=>{
                     return{
                         ...prev,
-                        status: res.data.status
+                        status: multiple_statuses
                     }
                 })
             })
@@ -232,43 +237,28 @@ const ProfilePageContent = (props)=>{
         }
         else 
         {
-            //verfica prin status daca exista deja desc sau creeaza una noua
-            if(userData.status == '')
-            {
-                //userul nu are o descriere, trebuie insert new 
-                axios.post('http://localhost:5000/api/insert-item-status',{
-                    user_id: props.currentUser,
-                    status_val: newData.newStatus
-                })
-                .then(res=>{
-                    
-                        console.log("fetch descccc:", res.data)
-                        fetchStatus()
+                if(userData.status.includes(newData.newStatus))
+                {
+                    alert(`Userul are deja activ statusul ${newData.newStatus}`)
+
+                }
+                else
+                {
+                    axios.post('http://localhost:5000/api/insert-item-status',{
+                        user_id: props.currentUser,
+                        status_val: newData.newStatus
                     })
-                .catch((err)=>{
-                    console.log(err)
-                    alert("Can't insert user's status!")
-                })
-            }
-            else 
-            {
-                //userul are deja 
-                 //userul nu are o descriere, trebuie insert new 
-                 axios.post('http://localhost:5000/api/update-item-status',{
-                    user_id: props.currentUser,
-                    new_status_val: newData.newStatus,
-                    old_status_val: userData.status
-                })
-                .then(res=>{
-                    
-                        console.log("fetch descccc:", res.data)
-                        fetchStatus()
+                    .then(res=>{
+                        
+                            console.log("fetch descccc:", res.data)
+                            fetchStatus()
+                        })
+                    .catch((err)=>{
+                        console.log(err)
+                        alert("Can't insert user's status!")
                     })
-                .catch((err)=>{
-                    console.log(err)
-                    alert("Can't update user's status!")
-                })
-            }
+                }
+
         }
     }
     return(
@@ -309,7 +299,17 @@ const ProfilePageContent = (props)=>{
                                 <span>Status:</span>
                             </div>
                             <div className="item-spefic-profile-left-bottom">
-                                <span>{userData.status}</span>
+                                {
+                                    userData.status.map((el)=>{
+                                        return(
+                                                <>
+                                                    <span>{el}</span>
+                                                    <br/>
+                                                </>
+                                            
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
 

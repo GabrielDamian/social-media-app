@@ -576,8 +576,9 @@ app.post('/api/fetch-specific-status',async (req,res)=>{
     return res.status(400).send(err);
     }
 
-    console.log('fetch custom user id:',data)
-      res.json({
+    console.log('Fetch SSTATUSES:',data)
+
+    res.json({
         status: data[0].status_value
       })
 
@@ -587,5 +588,22 @@ app.post('/api/fetch-specific-status',async (req,res)=>{
 })
 app.listen(PORT,()=>{
   console.log(`App is listenint at port ${PORT}`)
+})
+
+app.post('/api/fetch-multiple-status',async (req,res)=>{
+  let id = req.body.id;
+  con.query(`select status_value from status where user_id = ${id};`, async  (err, data)=> {
+
+    if (err || data.length == 0) {
+    return res.status(400).send(err);
+    }
+
+    console.log('Fetch SSTATUSES:',data)
+
+    res.json({
+        status: data
+      })
+
+    });
 })
 
