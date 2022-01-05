@@ -251,7 +251,7 @@ const TablePostsContent = (props)=>{
             <div className="table-users-content">
                 <div className="top-bar-table">
                     <div className="top-bar-current-table">
-                        <span>TABLE STATUS</span>
+                        <span>TABLE POSTS</span>
                     </div>
                     <div className="top-bar-log-out">
                         <span>Current userID: {props.currentUser}</span>
