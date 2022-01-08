@@ -226,22 +226,47 @@ const TableStatusContent = (props)=>{
         {
             alert("status value field can't be empty")
         }
+        else if(modifyValue.status_val == modifyValue.old_val)
+        {
+            alert("New value is the cannot be the same as the old value!")
+        }
         else
         {
-            //fetch la api cu update
-            axios.post('http://localhost:5000/api/update-item-status',{
-                user_id: modifyValue.user_id,
-                new_status_val: modifyValue.status_val,
-                old_status_val: modifyValue.old_val
+
+            console.log("Status data:", statusData)
+            let user_id = modifyValue.user_id;
+            let new_status_val = modifyValue.status_val;
+
+            let user_already_have_this_status = false;
+            statusData.forEach((el)=>{
+                if(el.user_id == user_id && el.status_value == new_status_val)
+                {
+                    user_already_have_this_status = true
+                }
             })
-            .then(res=>{
-                alert('Status updated!')
-                fetchStatusData()
-            })
-            .catch((err)=>{
-                console.log(err)
-                alert("Can't update status!")
-            })
+
+            if(user_already_have_this_status)
+            {
+                alert("This user already have this status in another row! Cannot add it anymore.")
+            }
+            else 
+            {
+                     //fetch la api cu update
+                    axios.post('http://localhost:5000/api/update-item-status',{
+                        user_id: modifyValue.user_id,
+                        new_status_val: modifyValue.status_val,
+                        old_status_val: modifyValue.old_val
+                    })
+                    .then(res=>{
+                        alert('Status updated!')
+                        fetchStatusData()
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                        alert("Can't update status!")
+                    })
+            }
+                  
         }
     }
 
