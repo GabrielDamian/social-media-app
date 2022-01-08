@@ -172,7 +172,7 @@ const NewsFeedContent = (props)=>{
 
             })
             
-            setPostFinal(final_post_format)
+            setPostFinal(final_post_format.reverse())
         }
     
     },[posts])
