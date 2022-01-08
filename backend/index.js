@@ -315,8 +315,6 @@ app.post('/api/insert-item-desc',async (req,res)=>{
       if (err || data.length == 0) {
       return res.status(400).send(err);
     }
-
-    console.log('aici:',data)
     res.json({
       'lines': data
     })
