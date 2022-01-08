@@ -434,7 +434,7 @@ app.post('/api/delete-table-posts',async (req,res)=>{
 
   console.log('delete post route:', post_id, post_value, user_id)
   con.query(`delete from posts where
-  post_id = ${post_id} and post_value = '${post_value}' and by_user_id=${user_id};`, async  (err, data)=> {
+  post_id = ${post_id};`, async  (err, data)=> {
 
     if (err || data.length == 0) {
     return res.status(400).send(err);
@@ -465,35 +465,64 @@ app.post('/api/add-table-posts',async (req,res)=>{
     if (err ) {
     return res.status(400).send(err);
     }
-    post_id = data.length;
-    console.log("POST_id dinamic:",post_id)
-
-
-      con.query(`insert into posts
-      values(${post_id},'${post_value}',${user_1});`, async  (err, data)=> {
-
-        if (err || data.length == 0) {
-        return res.status(400).send(err);
-        }
-
-        
-        //adauga si celalalt user
-        con.query(`insert into posts
-        values(${post_id},'${post_value}',${user_2});`, async  (err, data)=> {
-  
-          if (err || data.length == 0) {
-          return res.status(400).send(err);
-          }
-  
-          res.json({
-            'lines': data
-          })
-          
-        });
-
-      });
-
+    //logica din front end are nevoie de index par neaparat pentru a grupa postarile de la aceiasi users
+    console.log("DATA LENGTH:",data.length)
     
+    post_id = data.length+2;
+    if(data.length == 0)
+    {
+      //este prima postare din db si poate fi inserata cu post_id = 0
+          con.query(`insert into posts
+          values(0,'${post_value}',${user_1});`, async  (err, data)=> {
+            if (err || data.length == 0) {
+            return res.status(400).send(err);
+            }
+            //adauga si celalalt user
+            con.query(`insert into posts
+            values(0,'${post_value}',${user_2});`, async  (err, data)=> {
+              if (err || data.length == 0) {
+              return res.status(400).send(err);
+              }
+              res.json({
+                'lines': data
+              })
+            });
+          });
+    }
+    else 
+    {
+      //exista cel putin o postara in db si trebuie aflaat max(post_id)
+      con.query(`select max(post_id) from posts;`, async  (err, data)=> {
+          if(err || data.length == 0)
+          {
+            return res.status(400).send(err);
+          }
+
+          console.log("MAX post_id:",data[0]['max(post_id)'])
+          let new_id = data[0]['max(post_id)'] + 1;
+
+              con.query(`insert into posts
+              values(${new_id},'${post_value}',${user_1});`, async  (err, data)=> {
+                if (err || data.length == 0) {
+                return res.status(400).send(err);
+                }
+                //adauga si celalalt user
+                con.query(`insert into posts
+                values(${new_id},'${post_value}',${user_2});`, async  (err, data)=> {
+                  if (err || data.length == 0) {
+                  return res.status(400).send(err);
+                  }
+                  res.json({
+                    'lines': data
+                  })
+                });
+              });
+
+
+
+          })
+    }
+
     });
   
 });

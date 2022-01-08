@@ -14,7 +14,6 @@ const NewsFeed = () => {
     useEffect(()=>{
         store.subscribe(()=>{
 
-            console.log("store updated!:",store.getState())
             setCurrentUser(store.getState().userID)
         })
     })
@@ -80,7 +79,6 @@ const NewsFeedContent = (props)=>{
     const fetchPosts = ()=>{
         axios.post('http://localhost:5000/api/fetch-table-posts',{})
         .then(res=>{
-            console.log("fetch table-posts:",res.data.lines);
             setPosts(res.data.lines)
         })
         .catch((err)=>{
@@ -98,53 +96,83 @@ const NewsFeedContent = (props)=>{
     const [postFinal, setPostFinal] = useState([])
     
     useEffect(()=>{
-        console.log("posts:", posts);
         if(posts.length != 0)
         {
-            let arr_indexes = []
-            posts.forEach((el, index)=>{
-                if(index%2 == 0)
-                {
-                    arr_indexes.push(index)
-                }
-            })
-
-            console.log("arr indexes:", arr_indexes)
-            let arr_final_posts ={}
+            console.log("Format posts input:",posts);
             
-            arr_indexes.forEach((el)=>{
-                arr_final_posts[el]={
-                    post_value: '',
-                    users: []
+            // let arr_indexes = []
+            // posts.forEach((el, index)=>{
+            //     if(index%2 == 0)
+            //     {
+            //         arr_indexes.push(index)
+            //     }
+            // })
+
+            // console.log("arr indexes:", arr_indexes)
+            // let arr_final_posts ={}
+            
+            // arr_indexes.forEach((el)=>{
+            //     arr_final_posts[el]={
+            //         post_value: '',
+            //         users: []
+            //     }
+            // })
+
+            // arr_indexes.forEach((el)=>{
+
+            //     posts.forEach((post_el)=>{
+            //         if(post_el.post_id == el)
+            //         {
+            //             arr_final_posts[el].users.push(post_el.by_user_id)
+            //             arr_final_posts[el].post_value = post_el.post_value
+            //         }
+            //     })
+            // })
+
+            // let arr_final_format =[]
+            // for(const item in arr_final_posts)
+            // {
+            //     let temp_obj = {}
+            //     temp_obj['post_index'] = item
+            //     temp_obj['post_value'] = arr_final_posts[item]['post_value']
+            //     temp_obj['users'] = arr_final_posts[item]['users']
+            //     arr_final_format.push(temp_obj)
+            // }
+            // console.log("!!!!arr_final_format:", arr_final_format);
+
+            // setPostFinal(arr_final_format.reverse());
+
+            let find_indexes = []
+            posts.forEach((el)=>{
+                if(!find_indexes.includes(el.post_id))
+                {
+                    console.log("index nou:",el.post_id)
+                    find_indexes.push(el.post_id)
                 }
             })
+            console.log("find indexes:",find_indexes)
 
-            arr_indexes.forEach((el)=>{
-
+            let final_post_format = []
+            find_indexes.forEach((el)=>{
+                //pentru fiecare id al postarii, gaseste toate copiile cu aceeasi referinta
+                let temp_obj = {
+                    'post_index': el,
+                    'post_value': '',
+                    'users':[]
+                }
                 posts.forEach((post_el)=>{
                     if(post_el.post_id == el)
                     {
-                        arr_final_posts[el].users.push(post_el.by_user_id)
-                        arr_final_posts[el].post_value = post_el.post_value
+                        temp_obj['post_value'] = post_el.post_value
+                        temp_obj['users'].push(post_el.by_user_id)
                     }
                 })
+                console.log("TEMP OBJ:", temp_obj)
+             final_post_format.push(temp_obj)
+
             })
-
-            console.log("maybe:", arr_final_posts)
-            let arr_final_format =[]
-            for(const item in arr_final_posts)
-            {
-                console.log("aici:", item, arr_final_posts[item]);
-                let temp_obj = {}
-                temp_obj['post_index'] = item
-                temp_obj['post_value'] = arr_final_posts[item]['post_value']
-                temp_obj['users'] = arr_final_posts[item]['users']
-                arr_final_format.push(temp_obj)
-            }
-            console.log("arr_final_format:", arr_final_format);
-            setPostFinal(arr_final_format.reverse());
-
             
+            setPostFinal(final_post_format)
         }
     
     },[posts])
