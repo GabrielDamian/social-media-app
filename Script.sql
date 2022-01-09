@@ -1,0 +1,69 @@
+show databases;
+create database social_media;
+use social_media;
+
+create table users (
+	ID varchar(255) not null,
+    username varchar(255) not null,
+    password_token varchar(255) not null,
+    primary key (id)
+);
+
+create table description (
+	user_id varchar(255) not null primary key,
+	description_val varchar(255),
+    foreign key (user_id) references users(ID)
+);
+
+create table status(
+	user_id varchar(255) not null, 
+    status_value varchar(255),
+    CONSTRAINT CHK_status CHECK (status_value = 'BadKarma' OR status_value = 'DogeCoin' OR status_value ='Buttercup' OR status_value ='PickleRick'),
+    foreign key (user_id) references users(ID)
+);
+
+create table posts (
+	post_id int,
+    post_value varchar(255),
+    by_user_id int
+);
+
+
+insert into users values(1, 'damian', '$2a$10$Dfh4C3DkGNy/20/3B.3zoOYq96QZqBc7aCve2AW5ZkXfXBAQ0JtMu');
+insert into users values(2, 'gabriel', '$2a$10$lveYW7oP2Cloo.nK4WuPoutNkwzGj9YzomnvgaKhGvf//DShEnJGm');
+insert into users values(3, 'mihai', '$2a$10$OmUW8ODVzG7VMuSE9S9EXeJxkryJ8TPKj4JJRYI/fRSijnp0MR.Ae');
+insert into users values(4, 'alexandru', '$2a$10$rJouKgzCIS5V2w0YiAobYe0NOs9pJX3JLWUzCBvLrpiq8ylTsk1aW');
+insert into users values(5, 'marian', '$2a$10$zT5zwmH/uJEGmtlTHPKlqu4qNctn0aUS6jq3HfqCultO4M2ET3BJu');
+insert into users values(6, 'robert', '$2a$10$UKpb2KA2BgRIdfY4IUF1p.skbsHm36BbO3hs.Of6bhM32pLOr2/1u');
+
+insert into description values(1,'user s 1 description');
+insert into description values(2,'user s 2 description');
+insert into description values(3,'user s 3 description');
+insert into description values(4,'user s 4 description');
+insert into description values(5,'user s 5 description');
+insert into description values(6,'user s 6 description');
+
+insert into status values(1,'BadKarma');
+insert into status values(1,'DogeCoin');
+insert into status values(2,'Buttercup');
+insert into status values(3,'BadKarma');
+insert into status values(4,'Buttercup');
+insert into status values(5,'DogeCoin');
+insert into status values(5,'PickleRick');
+insert into status values(6,'PickleRick');
+
+
+insert into posts values(0,'https://images.unsplash.com/photo-1641240554332-8657df4952ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',1);
+insert into posts values(0,'https://images.unsplash.com/photo-1641220839365-ba2da91c1368?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',2);
+insert into posts values(1,'https://images.unsplash.com/photo-1641221075386-aa4abb3a5a5d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=377&q=80',1);
+insert into posts values(1,'https://images.unsplash.com/photo-1641221075386-aa4abb3a5a5d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=377&q=80',5);
+insert into posts values(2,'https://images.unsplash.com/photo-1641240554332-8657df4952ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',3);
+insert into posts values(2,'https://images.unsplash.com/photo-1641240554332-8657df4952ea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',5);
+insert into posts values(3,'https://images.unsplash.com/photo-1641208144232-b0775d26987b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',3);
+insert into posts values(3,'https://images.unsplash.com/photo-1641208144232-b0775d26987b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',6);
+insert into posts values(4,'https://images.unsplash.com/photo-1641261617588-ac82e3dcdec0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',4);
+insert into posts values(4,'https://images.unsplash.com/photo-1641261617588-ac82e3dcdec0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',2);
+
+
+
+

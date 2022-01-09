@@ -1,0 +1,16 @@
+-Instalare Node.js (npm manager)
+
+-Se ruleaza 'npm i' atat in folderul de backend cat si in cel de frontend.
+
+-Pornire baza de date: MySQL Workbench trebuie sa fie pornit, iar serverul 
+trebuie sa aiba user and pass: root
+-Daca nu au fost create deja tabelele, se ruleaza continutul lui 'script.sql' 
+(Backend-ul nu functioneaza daca nu exista create).
+
+-Pornire backend: npm run devStart   (in folderul de backend)
+-Pornire front end: npm run start	(in folderul de front end, dureza si pana la 6 min)
+
+-La pornire, aplicatia face redirect la un route default, pentru login se accesteaza /login 
+sau, daca sunteti deja logat: '/news-feed'.
+
+

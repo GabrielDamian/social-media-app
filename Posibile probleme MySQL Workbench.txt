@@ -1,0 +1,11 @@
+!!Important:
+Fix for: Client does not support authentication protocol requested by server;
+run in workbench: 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+
+
+!!Important, but not mandatory:
+Disable safe mode(allow you delete * from table_name; //without where clause)
+Edit->preferences > sql editor -> uncheck safe mode (last checkbox)
+Query->Reconnect to the server
+
